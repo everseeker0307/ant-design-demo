@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Row, Col } from 'antd';
-import Register from '../register/register.jsx';
+import { Link } from 'react-router';
+import Ajax from '../tools/ajax.jsx';
 
 const FormItem = Form.Item;
 
@@ -13,6 +14,12 @@ class Login extends React.Component {
     //this.props.form.getFieldsValue()返回的是一个json对象
     const data = this.props.form.getFieldsValue();
     console.log(data);
+    Ajax.post('http://localhost:8900/login',
+              { username: data.username, password: data.password },
+              r => {
+                console.log(r);
+              }
+    );
     // 将json对象转化为字符串
     // const dataStr = JSON.stringify(data, (k, v) => {
     //   if (typeof v === 'undefined') {
@@ -20,10 +27,6 @@ class Login extends React.Component {
     //   }
     //   return v;
     // });
-  }
-
-  redirectRegister() {
-    ReactDOM.render(<Register />, document.getElementById('root'));
   }
 
   render() {
@@ -50,7 +53,7 @@ class Login extends React.Component {
                 <Button type="primary" htmlType="submit">登录</Button>
               </FormItem>
               <FormItem label="没有帐号?" {...formItemLayout}>
-                <p><a href="#" onClick={this.redirectRegister}>立即注册!</a></p>
+                <p><Link to="/register">立即注册!</Link></p>
               </FormItem>
             </Form>
           </Col>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Row, Col } from 'antd';
+import Ajax from '../tools/ajax.jsx';
+
 const FormItem = Form.Item;
 
 /**
@@ -19,7 +21,12 @@ let Register = React.createClass({
           console.log('输入存在错误, 具体信息如下:\n', errors);
           return;
         }
-        console.log('Submit!!!');
+        Ajax.post('http://localhost:8900/register',
+                  { username: data.username, password: data.password, email: data.email },
+                  r => {
+                    console.log(r);
+                  }
+        );
         console.log(values);
       });
     } else {
