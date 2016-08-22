@@ -1,25 +1,26 @@
 const Ajax = {
   get(url, func) {
-    const request = new XMLHttpRequest();
-    request.open('GET', url);
-    request.onreadystatechange = () => {
-      if (request.readyState === 4 && func) {
-        func(request.response);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && func) {
+        func(xhr.response);
       }
     };
-    request.send(null);
+    xhr.send(null);
   },
 
   post(url, data, func) {
-    const request = new XMLHttpRequest();
-    request.open('POST', url);
-    request.onreadystatechange = () => {
-      if (request.readyState === 4 && func) {
-        func(request.response);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && func) {
+        func(xhr);
       }
     };
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.send(JSON.stringify(data));
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.withCredentials = true;   //允许cookie
+    xhr.send(JSON.stringify(data));
   },
 }
 
