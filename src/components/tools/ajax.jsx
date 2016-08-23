@@ -1,26 +1,35 @@
+import jquery from 'jquery';
+
 const Ajax = {
-  get(url, func) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && func) {
-        func(xhr.response);
-      }
-    };
-    xhr.send(null);
+  //post默认为json格式
+  post(urlp, datap, func) {
+    jquery.ajax({
+      type: 'POST',
+      url: urlp,
+      data: JSON.stringify(datap),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: r => {
+        func(r);
+      },
+    });
   },
 
-  post(url, data, func) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4 && func) {
-        func(xhr);
-      }
-    };
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.withCredentials = true;   //允许cookie
-    xhr.send(JSON.stringify(data));
+  //表单默认支持application/x-www-form-urlencoded
+  form(urlp, datap, func) {
+    jquery.ajax({
+      type: 'POST',
+      url: urlp,
+      data: datap,
+      dataType: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      xhrFields: {
+        withCredentials: true,
+      },
+      success: r => {
+        func(r);
+      },
+    });
   },
 }
 

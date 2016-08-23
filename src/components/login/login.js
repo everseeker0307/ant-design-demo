@@ -13,9 +13,12 @@ class Login extends React.Component {
     e.preventDefault();
     //this.props.form.getFieldsValue()返回的是一个json对象
     const data = this.props.form.getFieldsValue();
+    if (data.agreement === undefined) {
+      data.agreement = true;
+    }
     console.log(data);
-    Ajax.post('http://localhost:8900/login',
-              { username: data.username, password: data.password },
+    Ajax.form('http://localhost:8900/login',
+              data,
               r => {
                 console.log(r);
               }
@@ -47,7 +50,7 @@ class Login extends React.Component {
                 <Input type="password" placeholder="请输入密码" {...getFieldProps('password')} />
               </FormItem>
               <FormItem label="记住我" {...formItemLayout}>
-                <Checkbox {...getFieldProps('agreement')} />
+                <Checkbox {...getFieldProps('agreement')} defaultChecked />
               </FormItem>
               <FormItem wrapperCol={{ span: 16, offset: 6 }} style={{ marginTop: 24 }}>
                 <Button type="primary" htmlType="submit">登录</Button>
