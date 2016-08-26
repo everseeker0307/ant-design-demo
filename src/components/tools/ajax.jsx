@@ -1,6 +1,20 @@
 import jquery from 'jquery';
 
 const Ajax = {
+  get(urlp, func) {
+    jquery.ajax({
+      type: 'GET',
+      url: urlp,
+      data: null,
+      xhrFields: {
+        withCredentials: true,
+      },
+      success: r => {
+        func(r);
+      },
+    });
+  },
+
   //post默认为json格式
   post(urlp, datap, func) {
     jquery.ajax({
@@ -9,6 +23,9 @@ const Ajax = {
       data: JSON.stringify(datap),
       dataType: 'json',
       contentType: 'application/json',
+      xhrFields: {
+        withCredentials: true,
+      },
       success: r => {
         func(r);
       },
