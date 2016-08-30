@@ -25,6 +25,9 @@ let Register = React.createClass({
                   { username: data.username, password: data.password, email: data.email },
                   r => {
                     console.log(r);
+                    if (r.result === true) {
+                      window.location.href = '/';
+                    }
                   }
         );
         console.log(values);
